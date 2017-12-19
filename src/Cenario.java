@@ -19,9 +19,12 @@ public class Cenario {
 	 * @param numeracao número do cenário
 	 */
 	public Cenario(String descricao, int numeracao) {
+		if (descricao.trim().equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro de cenario: Descricao nao pode ser vazia");
+		}
 		this.descricao = descricao;
 		this.numeracao = numeracao;
-		this.estado = "Não finalizado";
+		this.estado = "Nao finalizado";
 		this.finalizado= false;		
 		this.caixa = 0;
 		this.totalRateio = 0;
@@ -30,9 +33,9 @@ public class Cenario {
 	/**
 	 * Método que auxiliar que levanta um erro caso uma ação ilegal tente ser feita em um cenário já fechado
 	 */
-	private void validarAcao(boolean desejado) throws IllegalAccessError {
+	private void validarAcao(boolean desejado){
 		if (this.finalizado != desejado) {
-			throw new IllegalAccessError("Cenário já foi finalizado!");
+			throw new IllegalAccessError("Cenario ja foi finalizado!");
 		}
 	}
 	
@@ -43,7 +46,7 @@ public class Cenario {
 	 * @param valorTaxado multiplicação das apostas perdedores pela taxa do sistema
 	 * @param totalRateio lucro total que será distribuído entre os que acertaram a aposta
 	 */
-	public void fechar(boolean ocorreu, int valorTaxado, int totalRateio) throws IllegalAccessError {
+	public void fechar(boolean ocorreu, int valorTaxado, int totalRateio){
 		validarAcao(false);
 		this.finalizado = true;
 		if (ocorreu) {
@@ -59,7 +62,7 @@ public class Cenario {
 	/**
 	 * @return caixa do cenário
 	 */
-	public int getCaixa() throws IllegalAccessError {
+	public int getCaixa(){
 		validarAcao(true);
 		return this.caixa;
 	}	
@@ -67,7 +70,7 @@ public class Cenario {
 	/** 
 	 * @return rateio total do cenário
 	 */
-	public int getTotalRateio() throws IllegalAccessError {
+	public int getTotalRateio(){
 		validarAcao(true);
 		return totalRateio;
 	}
@@ -77,6 +80,10 @@ public class Cenario {
 	 */
 	public String toString() {
 		return String.format("%d - %s - %s", this.numeracao, this.descricao, this.estado);
+	}
+
+	public boolean getFinalizado() {
+		return this.finalizado;
 	}
 
 }

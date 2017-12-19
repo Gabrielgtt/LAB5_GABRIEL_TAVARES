@@ -1,9 +1,20 @@
 /**
  * @author Gabriel Alves Tavares
  */
+import easyaccept.EasyAccept;
+
 public class Facade {
 
 	private Sistema sistema;
+	
+	public static void main(String[] args) {
+		String[] arg = new String[] {"Facade", "acceptance_test/us3_test.txt"};
+		EasyAccept.main(arg);
+	}
+	
+	public Facade() {
+		sistema = new Sistema(0,0);
+	}
 	
 	/**
 	 * Inicializa o sistema de controle principal do programa

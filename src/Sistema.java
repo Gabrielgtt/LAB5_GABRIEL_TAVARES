@@ -17,6 +17,12 @@ public class Sistema {
 	 * @param taxa valor da taxa de lucro sobre as apostas erradas
 	 */
 	public Sistema(int caixa, double taxa) {
+		if (caixa < 0) {
+			throw new IllegalArgumentException("Erro na inicializacao: Caixa nao pode ser inferior a 0");
+		}
+		if (taxa < 0.0) {
+			throw new IllegalArgumentException("Erro na inicializacao: Taxa nao pode ser inferior a 0");
+		}
 		this.caixa = caixa;
 		this.taxa = taxa;
 		this.ctrlCenarios = new ControleCenarios();
@@ -63,6 +69,12 @@ public class Sistema {
 	 * @param previsao "VAI ACONTECER" ou "N VAI ACONTECER"
 	 */
 	public void cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
+		if (cenario <= 0) {
+			throw new IllegalArgumentException("Erro no cadastro de aposta: Cenario invalido");
+		}
+		if (cenario >= ctrlCenarios.getNumeracao()) {
+			throw new IllegalArgumentException("Erro no cadastro de aposta: Cenario nao cadastrado");
+		}
 		this.ctrlApostas.cadastrarAposta(cenario, apostador, valor, previsao);
 	}
 
@@ -72,6 +84,12 @@ public class Sistema {
 	 * @return soma do valor de todas as apostas feitas em um cenário
 	 */
 	public int valorTotalDeApostas(int cenario) {
+		if (cenario <= 0) {
+			throw new IllegalArgumentException("Erro na consulta do valor total de apostas: Cenario invalido");
+		}
+		if (cenario >= ctrlCenarios.getNumeracao()) {
+			throw new IllegalArgumentException("Erro na consulta do valor total de apostas: Cenario nao cadastrado");
+		}
 		return this.ctrlApostas.valorTotalDeApostas(cenario);
 	}
 
@@ -81,6 +99,12 @@ public class Sistema {
 	 * @return número de apostas feitas em um cenário
 	 */
 	public int totalDeApostas(int cenario) {
+		if (cenario <= 0) {
+			throw new IllegalArgumentException("Erro na consulta do total de apostas: Cenario invalido");
+		}
+		if (cenario >= ctrlCenarios.getNumeracao()) {
+			throw new IllegalArgumentException("Erro na consulta do total de apostas: Cenario nao cadastrado");
+		}
 		return this.ctrlApostas.totalDeApostas(cenario);
 	}
 	
@@ -101,9 +125,19 @@ public class Sistema {
 	 * @param ocorreu booleando que indica a ocorrência do cenário
 	 */
 	public void fecharAposta(int cenario, boolean ocorreu) {
+		if (cenario <= 0) {
+			throw new IllegalArgumentException("Erro ao fechar aposta: Cenario invalido");
+		}
+		if (cenario >= ctrlCenarios.getNumeracao()) {
+			throw new IllegalArgumentException("Erro ao fechar aposta: Cenario nao cadastrado");
+		}
+		if (ctrlCenarios.fechado(cenario)) {
+			throw new IllegalArgumentException("Erro ao fechar aposta: Cenario ja esta fechado");
+		}
+		
 		int valorApostasErradas = this.ctrlApostas.valorApostasErradas(cenario, ocorreu);
 		int valorTaxado = (int) Math.floor(((double) valorApostasErradas * taxa)); 
-		int totalRateio = (this.ctrlApostas.valorTotalDeApostas(cenario) - valorTaxado);
+		int totalRateio = (valorApostasErradas - valorTaxado);
 		
 		this.caixa += valorTaxado;
 		this.ctrlCenarios.fecharCenario(cenario, ocorreu, valorTaxado, totalRateio);
@@ -115,6 +149,15 @@ public class Sistema {
 	 * @return o valor total de um cenário encerrado que será destinado ao caixa
 	 */
 	public int getCaixaCenario(int cenario) {
+		if (cenario <= 0) {
+			throw new IllegalArgumentException("Erro na consulta do caixa do cenario: Cenario invalido");
+		}
+		if (cenario >= ctrlCenarios.getNumeracao()) {
+			throw new IllegalArgumentException("Erro na consulta do caixa do cenario: Cenario nao cadastrado");
+		}
+		if (!ctrlCenarios.fechado(cenario)) {
+			throw new IllegalArgumentException("Erro na consulta do caixa do cenario: Cenario ainda esta aberto");
+		}
 		return this.ctrlCenarios.getCaixaCenario(cenario);
 	}
 
@@ -124,6 +167,15 @@ public class Sistema {
 	 * @return o valor total de um cenário encerrado que será destinado a distribuição entre as apostas vencedoras
 	 */
 	public int getTotalRateioCenario(int cenario) {
+		if (cenario <= 0) {
+			throw new IllegalArgumentException("Erro na consulta do total de rateio do cenario: Cenario invalido");
+		}
+		if (cenario >= ctrlCenarios.getNumeracao()) {
+			throw new IllegalArgumentException("Erro na consulta do total de rateio do cenario: Cenario nao cadastrado");
+		}
+		if (!ctrlCenarios.fechado(cenario)) {
+			throw new IllegalArgumentException("Erro na consulta do total de rateio do cenario: Cenario ainda esta aberto");
+		}
 		return this.ctrlCenarios.getTotalRateio(cenario);
 	}
 

@@ -25,9 +25,6 @@ public class ControleCenarios {
 	public int cadastrarCenario(String descricao) {
 		if (descricao == null) {
 			throw new NullPointerException();
-		} 
-		if (descricao.trim().equals("")){
-			throw new IllegalArgumentException();
 		}
 		Cenario cenario = new Cenario(descricao, numeracao);
 		this.cenarios.add(cenario);
@@ -39,6 +36,12 @@ public class ControleCenarios {
 	 * @return representação textual do cenário com a numeração recebida
 	 */
 	public String exibirCenario(int cenario) {
+		if (cenario <= 0) {
+			throw new IllegalArgumentException("Erro na consulta de cenario: Cenario invalido");
+		}
+		if (cenario >= numeracao) {
+			throw new IllegalArgumentException("Erro na consulta de cenario: Cenario nao cadastrado");
+		}
 		return cenarios.get(cenario - 1).toString();
 	}
 
@@ -80,6 +83,14 @@ public class ControleCenarios {
 	 */
 	public int getTotalRateio(int cenario) {
 		return cenarios.get(cenario - 1).getTotalRateio();
+	}
+
+	public int getNumeracao() {
+		return this.numeracao;
+	}
+
+	public boolean fechado(int cenario) {
+		return cenarios.get(cenario-1).getFinalizado();
 	}
 
 }

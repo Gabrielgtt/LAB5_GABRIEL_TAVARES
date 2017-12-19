@@ -18,10 +18,26 @@ public class Aposta {
 	 * @param previsao "VAI ACONTECER" ou "N VAI ACONTECER"
 	 */
 	public Aposta(int cenario, String apostador, int valor, String previsao) {
+		this.validarCadastroAposta(cenario, apostador, valor, previsao);
 		this.cenario = cenario;
 		this.apostador = apostador;
 		this.valor = valor;
 		this.previsao = previsao;
+	}
+	
+	private void validarCadastroAposta(int cenario, String apostador, int valor, String previsao) {
+		if (apostador == null || apostador.trim().equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro de aposta: Apostador nao pode ser vazio ou nulo");
+		}
+		if (valor <= 0) {
+			throw new IllegalArgumentException("Erro no cadastro de aposta: Valor nao pode ser menor ou igual a zero");
+		}
+		if (previsao == null || previsao.trim().equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro de aposta: Previsao nao pode ser vazia ou nula");
+		}
+		if (!previsao.equals("VAI ACONTECER") && !previsao.equals("N VAI ACONTECER")) {
+			throw new IllegalArgumentException("Erro no cadastro de aposta: Previsao invalida");
+		}
 	}
 
 	/**

@@ -7,7 +7,7 @@ import org.junit.Test;
 public class ControleCenariosTest {
 
 	private ControleCenarios ctrlCen1; 
-	private ControleCenarios ctrlCen2; 
+	private ControleCenarios ctrlCen2;
 	
 	
 	@Before
