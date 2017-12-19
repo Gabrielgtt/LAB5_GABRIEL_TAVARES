@@ -1,5 +1,6 @@
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
@@ -25,7 +26,7 @@ public class CenarioTest {
 	@Test
 	public void toStringTest() {
 		String esperado = "1 - Tirar 10 no Lab5 - Não finalizado";
-		assertEquals(true, this.cenario.toString().equals(esperado));
+		assertTrue(this.cenario.toString().equals(esperado));
 	}
 
 	@Test(expected=IllegalAccessError.class)
@@ -42,7 +43,7 @@ public class CenarioTest {
 	
 	@Test
 	public void getCaixaCenarioFechado() {
-		assertEquals(true, this.cenarioFechado1.getCaixa() == 200);
+		assertTrue(this.cenarioFechado1.getCaixa() == 200);
 	}
 	
 	@Test
@@ -58,13 +59,13 @@ public class CenarioTest {
 	@Test
 	public void CenarioFechado1ToStringTest() {
 		String esperado = "2 - Tirar A+ no Lab5 - Finalizado (ocorreu)";
-		assertEquals(true, this.cenarioFechado1.toString().equals(esperado));
+		assertTrue(this.cenarioFechado1.toString().equals(esperado));
 	}
 	
 	@Test
 	public void CenarioFechado2ToStringTest() {
 		String esperado = "3 - Tirar A+ no Lab5 - Finalizado (n ocorreu)";
-		assertEquals(true, this.cenarioFechado2.toString().equals(esperado));
+		assertTrue(this.cenarioFechado2.toString().equals(esperado));
 	}
 	
 

@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
@@ -33,14 +33,14 @@ public class ControleCenariosTest {
 	@Test
 	public void exibirCenario() {
 		String esperado = "1 - 10 LP2 - Não finalizado";
-		assertEquals(true, ctrlCen2.exibirCenario(1).equals(esperado));
+		assertTrue(ctrlCen2.exibirCenario(1).equals(esperado));
 	}
 	
 	@Test
 	public void exibirCenarios() {
 		String esperado = "1 - 10 LP2 - Não finalizado" + System.lineSeparator() +
 						  "2 - SS+ LP2 - Não finalizado" + System.lineSeparator();
-		assertEquals(true, ctrlCen2.exibirCenarios().equals(esperado));
+		assertTrue(ctrlCen2.exibirCenarios().equals(esperado));
 	}	
 	
 
