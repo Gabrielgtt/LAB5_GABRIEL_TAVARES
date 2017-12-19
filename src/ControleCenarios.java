@@ -35,7 +35,7 @@ public class ControleCenarios {
 	}
 
 	/**
-	 * @param cenario numeração do cenário
+	 * @param cenario numeração do cenário.
 	 * @return representação textual do cenário com a numeração recebida
 	 */
 	public String exibirCenario(int cenario) {
