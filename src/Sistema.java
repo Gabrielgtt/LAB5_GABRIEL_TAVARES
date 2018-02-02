@@ -46,6 +46,16 @@ public class Sistema {
 	}
 
 	/**
+	 * Cadastra um cenário com bônus
+	 * @param descricao descrição textual do cenário
+	 * @param bonus valor bônus a ser destribuido para o vencedores das apostas desse cenário
+	 * @return numeração do cenário
+	 */
+	public int cadastrarCenario(String descricao, int bonus) {
+		return this.ctrlCenarios.cadastrarCenario(descricao, bonus);
+	}
+
+	/**
 	 * Exibe a representação textual de um cenário
 	 * @param cenario número do cenário
 	 * @return toString do cenário escolhido
@@ -178,5 +188,6 @@ public class Sistema {
 		}
 		return this.ctrlCenarios.getTotalRateio(cenario);
 	}
+
 
 }

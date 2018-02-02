@@ -7,7 +7,7 @@ public class ControleCenarios {
 
 	private ArrayList <Cenario> cenarios;
 	private int numeracao;
-	
+
 	/**
 	 * Construtor do controlador de cenários. 
 	 * Inicializa o ArrayList de cenários e atribui o valor 1 para a numeração dos cenários.
@@ -16,9 +16,9 @@ public class ControleCenarios {
 		this.cenarios = new ArrayList <Cenario>(); 
 		this.numeracao = 1;
 	}
-	
+
 	/**
-	 * Adiciona um cenário ao ArrayList de cenários, retorna a numeração de cenários e a incrementa em 1. 
+	 * Cadastra um cenário, retorna a numeração deste. 
 	 * @param descricao descricao do cenário
 	 * @return numeração atribuida ao cenário cadastrado
 	 */
@@ -31,6 +31,22 @@ public class ControleCenarios {
 		return numeracao++;
 	}
 
+	/**
+	 * Cadastra um cenário com bônus, retorna a numeração deste.
+	 * @param descricao descrição do cenário
+	 * @param bonus valor bônus a ser destribuido para o vencedores das apostas desse cenário
+	 * @return numeração do cenário
+	 */
+	public int cadastrarCenario(String descricao, int bonus) {
+		if (descricao == null) {
+			throw new NullPointerException();
+		}
+		Cenario cenario = new CenarioComBonus(descricao, numeracao, bonus);
+		this.cenarios.add(cenario);
+		return numeracao++;
+	}
+
+	
 	/**
 	 * @param cenario numeração do cenário.
 	 * @return representação textual do cenário com a numeração recebida

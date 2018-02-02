@@ -4,12 +4,12 @@
  */
 public class Cenario {
 
+	protected int totalRateio;
 	private String descricao;
 	private int numeracao;
 	private String estado;
 	private boolean finalizado;
 	private int caixa;
-	private int totalRateio;
 
 	/**
 	 * Construtor de um cenário.

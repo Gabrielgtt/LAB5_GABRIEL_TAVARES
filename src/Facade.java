@@ -41,6 +41,10 @@ public class Facade {
 		return sistema.cadastrarCenario(descricao);
 	}
 	
+	int cadastrarCenario(String descricao, int bonus) {
+		return sistema.cadastrarCenario(descricao, bonus);
+	}
+	
 	/**
 	 * Exibe a representação textual de um cenário
 	 * @param cenario número do cenário
