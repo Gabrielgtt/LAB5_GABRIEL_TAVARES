@@ -24,7 +24,7 @@ public class Cenario {
 		}
 		this.descricao = descricao;
 		this.numeracao = numeracao;
-		this.estado = "Nao finalizado";
+		this.estado = "Não finalizado";
 		this.finalizado= false;		
 		this.caixa = 0;
 		this.totalRateio = 0;

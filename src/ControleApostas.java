@@ -6,16 +6,18 @@ import java.util.ArrayList;
 public class ControleApostas {
 
 	private ArrayList <Aposta> apostas;
+	private ArrayList <Integer> seguroApostas;
 	
 	/**
 	 * Construtor de apostas que inicializa o ArrayList de apostas.
 	 */
 	public ControleApostas() {
 		this.apostas = new ArrayList <Aposta>();
+		this.seguroApostas = new ArrayList <Integer>();
 	}
 	
 	/**
-	 * Constrói e adiciona uma apostas ao ArrayList de apostas.
+	 * Constrói e adiciona uma aposta ao ArrayList de apostas.
 	 * @param cenario número de cenário
 	 * @param apostador nome do apostador
 	 * @param valor valor da aposta (em centavos)
@@ -23,7 +25,33 @@ public class ControleApostas {
 	 */
 	public void cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
 		Aposta aposta = new Aposta(cenario, apostador, valor, previsao);
-		apostas.add(aposta);
+		this.apostas.add(aposta);
+	}
+
+	/**
+	 * Constrói e adiciona uma aposta assegurada por valor ao ArrayList de apostas.
+	 * @param cenario número de cenário
+	 * @param apostador nome do apostador
+	 * @param valor valor da aposta (em centavos)
+	 * @param previsao "VAI ACONTECER" ou "N VAI ACONTECER"
+	 * @param valorSeguro valor que o apostador receberá caso perca a aposta
+	 */
+	public void cadastrarApostaSeguraValor(int cenario, String apostador, int valor, String previsao, int valorSeguro) {
+		Aposta aposta = new Aposta(cenario, apostador, valor, previsao, valorSeguro);
+		this.apostas.add(aposta);
+	}
+	
+	/**
+	 * Constrói e adiciona uma aposta assegurada por valor ao ArrayList de apostas.
+	 * @param cenario número de cenário
+	 * @param apostador nome do apostador
+	 * @param valor valor da aposta (em centavos)
+	 * @param previsao "VAI ACONTECER" ou "N VAI ACONTECER"
+	 * @param taxa taxa da aposta que será segurada para o apostador caso perca
+	 */	
+	public void cadastrarApostaSeguraTaxa(int cenario, String apostador, int valor, String previsao, double taxa) {
+		Aposta aposta = new Aposta(cenario, apostador, valor, previsao, taxa);
+		this.apostas.add(aposta);
 	}
 
 	/**
@@ -33,7 +61,7 @@ public class ControleApostas {
 	 */
 	public int valorTotalDeApostas(int cenario) {
 		int valorTotal = 0;
-		for (Aposta aposta : apostas) {
+		for (Aposta aposta : this.apostas) {
 			if (aposta.getCenario() == cenario) {
 				valorTotal += aposta.getValor();				
 			}
@@ -42,13 +70,30 @@ public class ControleApostas {
 	}
 
 	/**
+	 * Soma o valor total assegurado pelos apostadores ao fechar um cenário
+	 * @param cenario número do cenário
+	 * @param ocorreu 
+	 * @return
+	 */
+	public int valorSeguros(int cenario, boolean ocorreu) {
+		int totalSeguro = 0;
+		
+		for (Aposta aposta : this.apostas) {
+			if (aposta.getCenario() == cenario && aposta.getPrevisao() != ocorreu) {
+				totalSeguro += aposta.getValorSeguro();
+			}
+		}
+		return totalSeguro;
+	}
+	
+	/**
 	 * Conta e retorna o número de apostas que um cenário recebeu.
 	 * @param cenario número do cenário
 	 * @return número de apostas que o cenário especificado recebeu
 	 */
 	public int totalDeApostas(int cenario) {
 		int totalApostas = 0;
-		for (Aposta aposta : apostas) {
+		for (Aposta aposta : this.apostas) {
 			if (aposta.getCenario() == cenario) {
 				totalApostas++;
 			}
@@ -63,7 +108,7 @@ public class ControleApostas {
 	 */
 	public String exibeApostas(int cenario) {
 		String listaApostas = "";
-		for (Aposta aposta : apostas) {
+		for (Aposta aposta : this.apostas) {
 			if (aposta.getCenario() == cenario) {
 				listaApostas += aposta.toString();				
 			}
@@ -78,20 +123,17 @@ public class ControleApostas {
 	 * @return soma do valor de todas apostas de previsão errada
 	 */
 	public int valorApostasErradas(int cenario, boolean ocorreu) {
-		String ocorrimento;
-		if (ocorreu) {
-			ocorrimento = "VAI ACONTECER";
-		} else {
-			ocorrimento = "N VAI ACONTECER";
-		}
-			
 		int valorErradas = 0;
-		for (Aposta aposta : apostas) {
-			if (aposta.getCenario() == cenario && !aposta.getPrevisao().equals(ocorrimento)) {
+		for (Aposta aposta : this.apostas) {
+			if (aposta.getCenario() == cenario && aposta.getPrevisao() != ocorreu) {
 				valorErradas += aposta.getValor();
 			}
 		}
 		return valorErradas;
 	}
+
+	
+
+	
 
 }

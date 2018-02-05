@@ -26,7 +26,7 @@ public class CenarioTest {
 	@Test
 	public void toStringTest() {
 		String esperado = "1 - Tirar 10 no Lab5 - Não finalizado";
-		assertTrue(this.cenario.toString().equals(esperado));
+		assertEquals(this.cenario.toString(), esperado);
 	}
 
 	@Test(expected=IllegalAccessError.class)

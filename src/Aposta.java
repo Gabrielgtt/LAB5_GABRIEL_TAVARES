@@ -9,6 +9,7 @@ public class Aposta {
 	private String apostador;
 	private int valor;
 	private String previsao;
+	private SeguroValor seguro;
 
 	/**
 	 * Construtor de aposta que atribui seus atributos conforme recebido.
@@ -23,6 +24,49 @@ public class Aposta {
 		this.apostador = apostador;
 		this.valor = valor;
 		this.previsao = previsao;
+		this.setSeguro(0);
+	}
+	
+	/**
+	 * Construtor de aposta que atribui seus atributos conforme recebido.
+	 * @param cenario número do cenário
+	 * @param apostador nome do apostador
+	 * @param valor valor da aposta (em centavos)
+	 * @param previsao "VAI ACONTECER" ou "N VAI ACONTECER"
+	 * @param valorSeguro valor que o apostador receberá caso perca a aposta
+	 */
+	public Aposta(int cenario, String apostador, int valor, String previsao, int valorSeguro) {
+		this(cenario, apostador, valor, previsao);
+		this.setSeguro(valorSeguro);
+	}
+	
+	/**
+	 * Construtor de aposta que atribui seus atributos conforme recebido.
+	 * @param cenario número do cenário
+	 * @param apostador nome do apostador
+	 * @param valor valor da aposta (em centavos)
+	 * @param previsao "VAI ACONTECER" ou "N VAI ACONTECER"
+	 * @param taxa taxa da aposta que será segurada para o apostador caso perca
+	 */
+	public Aposta(int cenario, String apostador, int valor, String previsao, double taxa) {
+		this(cenario, apostador, valor, previsao);
+		this.setSeguro(taxa);
+	}
+	
+	/**
+	 * Modifica o seguro dessa aposta para um do tipo Valor
+	 * @param valorSeguro valor assegurado pelo apostador caso perca a aposta
+	 */
+	public void setSeguro(int valorSeguro) {
+		this.seguro = new SeguroValor(valorSeguro);
+	}
+	
+	/**
+	 * Modifica o seguro dessa aposta para um do tipo Taxa
+	 * @param taxa taxa da aposta que será segurada para o apostador caso perca
+	 */
+	public void setSeguro(double taxa) {
+		this.seguro = new SeguroTaxa(this.valor, taxa);
 	}
 	
 	private void validarCadastroAposta(int cenario, String apostador, int valor, String previsao) {
@@ -41,21 +85,29 @@ public class Aposta {
 	}
 
 	/**
-	 * @return valor do objeto
+	 * @return valor da aposta
 	 */
 	public int getValor() {
 		return this.valor;
 	}
 
 	/**
-	 * @return previsão do objeto
+	 * @return se a previsão é de que o cenário ocorrerá, retorna true, do contrário false
 	 */
-	public String getPrevisao() {
-		return this.previsao;
+	public boolean getPrevisao() {
+		if (this.previsao.equals("VAI ACONTECER")) return true;
+		return false;
+	}
+	
+	/**
+	 * @return valor do seguro da aposta
+	 */
+	public int getValorSeguro() {
+		return this.seguro.getValorSeguro();
 	}
 
 	/**
-	 * @return número do cenário do objeto
+	 * @return número do cenário da aposta
 	 */
 	public int getCenario() {
 		return this.cenario;
@@ -65,7 +117,12 @@ public class Aposta {
 	 * @return representação textual da aposta com nome do apostador, valor em Reais e a previsão
 	 */
 	public String toString() {
-		double valorReais = ((double) valor) / 100;
-		return String.format("%s - R$%.2f - %s", this.apostador, valorReais, this.previsao);
+		double valorReais = ((double) valor) / (double) 100;
+		int infoSeguro = this.seguro.getValorSeguro();
+		String representacao = String.format("%s - R$%.2f - %s", this.apostador, valorReais, this.previsao);
+		
+		if (infoSeguro != 0) representacao += this.seguro.toString();
+		
+		return representacao;
 	}
 }

@@ -52,6 +52,10 @@ public class Sistema {
 	 * @return numeração do cenário
 	 */
 	public int cadastrarCenario(String descricao, int bonus) {
+		if (caixa < bonus) {
+			throw new IllegalArgumentException("Bônus de cenário é maior do que dinheiro em caixa do sistema");
+		}
+		this.caixa -= bonus; // PERGUNTAR SE HÁ PROBLEMA EM DIMINUIR O CAIXA ANTES DE CRIAR O CENÁRIO
 		return this.ctrlCenarios.cadastrarCenario(descricao, bonus);
 	}
 
@@ -88,6 +92,35 @@ public class Sistema {
 		this.ctrlApostas.cadastrarAposta(cenario, apostador, valor, previsao);
 	}
 
+
+	/**
+	 * Cadastra uma nova aposta assegurada por valor
+	 * @param cenario número do cenário
+	 * @param apostador nome do apostador
+	 * @param valor valor da aposta (em centavos)
+	 * @param previsao "VAI ACONTECER" ou "N VAI ACONTECER"
+	 * @param valorSeguro valor que o apostador receberá caso perca a aposta
+	 * @param custoSeguro valor pago pelo apostador pelo seguro
+	 */
+	public void cadastrarApostaSeguraValor(int cenario, String apostador, int valor, String previsao, int valorSeguro, int custoSeguro) {
+		this.caixa += custoSeguro;
+		this.ctrlApostas.cadastrarApostaSeguraValor(cenario, apostador, valor, previsao, valorSeguro);
+	}
+
+	/**
+	 * Cadastra uma nova aposta assegurada por valor
+	 * @param cenario número do cenário
+	 * @param apostador nome do apostador
+	 * @param valor valor da aposta (em centavos)
+	 * @param previsao "VAI ACONTECER" ou "N VAI ACONTECER"
+	 * @param valorSeguro valor que o apostador receberá caso perca a aposta
+	 * @param taxa taxa da aposta que será segurada para o apostador caso perca
+	 */
+	public void cadastrarApostaSeguraTaxa(int cenario, String apostador, int valor, String previsao, double taxa, int custoSeguro) {
+		this.caixa += custoSeguro;
+		this.ctrlApostas.cadastrarApostaSeguraTaxa(cenario, apostador, valor, previsao, taxa);
+	}
+	
 	/**
 	 * Obtém o valor total apostado em um cenário
 	 * @param cenario número do cenário
@@ -150,6 +183,7 @@ public class Sistema {
 		int totalRateio = (valorApostasErradas - valorTaxado);
 		
 		this.caixa += valorTaxado;
+		this.caixa -= ctrlApostas.valorSeguros(cenario, ocorreu);
 		this.ctrlCenarios.fecharCenario(cenario, ocorreu, valorTaxado, totalRateio);
 	}
 
@@ -188,6 +222,10 @@ public class Sistema {
 		}
 		return this.ctrlCenarios.getTotalRateio(cenario);
 	}
+
+	
+
+	
 
 
 }

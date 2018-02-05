@@ -20,7 +20,7 @@ public class ApostaTest {
 	
 	@Test
 	public void getPrevisaoTeste() {
-		assertTrue(this.aposta.getPrevisao().equals("VAI ACONTECER"));
+		assertTrue(this.aposta.getPrevisao() == true);
 	}
 	
 	@Test

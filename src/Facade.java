@@ -71,7 +71,33 @@ public class Facade {
 	public void cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
 		sistema.cadastrarAposta(cenario, apostador, valor, previsao);
 	}
+	
+	/**
+	 * Cadastra uma nova aposta assegurada por valor
+	 * @param cenario número do cenário
+	 * @param apostador nome do apostador
+	 * @param valor valor da aposta (em centavos)
+	 * @param previsao "VAI ACONTECER" ou "N VAI ACONTECER"
+	 * @param valorSeguro valor que será assegurado ao apostador
+	 * @param custoSeguro valor a ser pago para realizar a aposta com seguro
+	 */
+	public void cadastrarApostaSeguraValor(int cenario, String apostador, int valor, String previsao, int valorSeguro, int custoSeguro) {
+		sistema.cadastrarApostaSeguraValor(cenario, apostador, valor, previsao, valorSeguro, custoSeguro);
+	}
 
+	/**
+	 * Cadastra uma nova aposta assegurada por taxa
+	 * @param cenario número do cenário
+	 * @param apostador nome do apostador
+	 * @param valor valor da aposta (em centavos)
+	 * @param previsao "VAI ACONTECER" ou "N VAI ACONTECER"
+	 * @param taxa taxa da aposta que será segurada para o apostador caso perca
+	 * @param custoSeguro valor a ser pago para realizar a aposta com seguro
+	 */
+	public void cadastrarApostaSeguraTaxa(int cenario, String apostador, int valor, String previsao, double taxa, int custoSeguro) {
+		sistema.cadastrarApostaSeguraTaxa(cenario, apostador, valor, previsao, taxa, custoSeguro);
+	}
+	
 	/**
 	 * Obtém o valor total apostado em um cenário
 	 * @param cenario número do cenário
