@@ -67,6 +67,5 @@ public class CenarioTest {
 		String esperado = "3 - Tirar A+ no Lab5 - Finalizado (n ocorreu)";
 		assertTrue(this.cenarioFechado2.toString().equals(esperado));
 	}
-	
-
+			
 }

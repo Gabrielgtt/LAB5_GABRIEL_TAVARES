@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class ControleCenarios {
 
 	private ArrayList <Cenario> cenarios;
-	private int numeracao;
 
 	/**
 	 * Construtor do controlador de cenários. 
@@ -14,7 +13,6 @@ public class ControleCenarios {
 	 */
 	public ControleCenarios() {
 		this.cenarios = new ArrayList <Cenario>(); 
-		this.numeracao = 1;
 	}
 
 	/**
@@ -26,9 +24,9 @@ public class ControleCenarios {
 		if (descricao == null) {
 			throw new NullPointerException();
 		}
-		Cenario cenario = new Cenario(descricao, numeracao);
+		Cenario cenario = new Cenario(descricao, cenarios.size()+1);
 		this.cenarios.add(cenario);
-		return numeracao++;
+		return cenarios.size();
 	}
 
 	/**
@@ -41,9 +39,9 @@ public class ControleCenarios {
 		if (descricao == null) {
 			throw new NullPointerException();
 		}
-		Cenario cenario = new CenarioComBonus(descricao, numeracao, bonus);
+		Cenario cenario = new CenarioComBonus(descricao, cenarios.size()+1, bonus);
 		this.cenarios.add(cenario);
-		return numeracao++;
+		return cenarios.size();
 	}
 
 	
@@ -55,7 +53,7 @@ public class ControleCenarios {
 		if (cenario <= 0) {
 			throw new IllegalArgumentException("Erro na consulta de cenario: Cenario invalido");
 		}
-		if (cenario >= numeracao) {
+		if (cenario > cenarios.size()) {
 			throw new IllegalArgumentException("Erro na consulta de cenario: Cenario nao cadastrado");
 		}
 		return cenarios.get(cenario - 1).toString();
@@ -102,7 +100,7 @@ public class ControleCenarios {
 	}
 
 	public int getNumeracao() {
-		return this.numeracao;
+		return this.cenarios.size()+1;
 	}
 
 	public boolean fechado(int cenario) {

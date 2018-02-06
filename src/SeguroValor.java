@@ -1,14 +1,10 @@
 
-public class SeguroValor {
+public class SeguroValor extends Seguro{
 	
 	private int valorSeguro;
 
 	public SeguroValor(int valorSeguro){
-		this.valorSeguro = valorSeguro;
-	}
-	
-	public int getValorSeguro() {
-		return this.valorSeguro;
+		super(valorSeguro);
 	}
 	
 	public String toString() {

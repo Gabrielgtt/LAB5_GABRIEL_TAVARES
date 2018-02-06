@@ -83,12 +83,7 @@ public class Sistema {
 	 * @param previsao "VAI ACONTECER" ou "N VAI ACONTECER"
 	 */
 	public void cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
-		if (cenario <= 0) {
-			throw new IllegalArgumentException("Erro no cadastro de aposta: Cenario invalido");
-		}
-		if (cenario >= ctrlCenarios.getNumeracao()) {
-			throw new IllegalArgumentException("Erro no cadastro de aposta: Cenario nao cadastrado");
-		}
+		validarCenario(cenario, "Erro no cadastro de aposta", true);
 		this.ctrlApostas.cadastrarAposta(cenario, apostador, valor, previsao);
 	}
 
@@ -127,12 +122,7 @@ public class Sistema {
 	 * @return soma do valor de todas as apostas feitas em um cenário
 	 */
 	public int valorTotalDeApostas(int cenario) {
-		if (cenario <= 0) {
-			throw new IllegalArgumentException("Erro na consulta do valor total de apostas: Cenario invalido");
-		}
-		if (cenario >= ctrlCenarios.getNumeracao()) {
-			throw new IllegalArgumentException("Erro na consulta do valor total de apostas: Cenario nao cadastrado");
-		}
+		validarCenario(cenario, "Erro na consulta do valor total de apostas", true);
 		return this.ctrlApostas.valorTotalDeApostas(cenario);
 	}
 
@@ -142,12 +132,7 @@ public class Sistema {
 	 * @return número de apostas feitas em um cenário
 	 */
 	public int totalDeApostas(int cenario) {
-		if (cenario <= 0) {
-			throw new IllegalArgumentException("Erro na consulta do total de apostas: Cenario invalido");
-		}
-		if (cenario >= ctrlCenarios.getNumeracao()) {
-			throw new IllegalArgumentException("Erro na consulta do total de apostas: Cenario nao cadastrado");
-		}
+		validarCenario(cenario, "Erro na consulta do total de apostas", true);
 		return this.ctrlApostas.totalDeApostas(cenario);
 	}
 	
@@ -160,6 +145,24 @@ public class Sistema {
 		return this.ctrlApostas.exibeApostas(cenario);
 	}
 
+	private void validarCenario(int cenario, String mensagem, boolean checkFechado) {
+		if (cenario <= 0) {
+			throw new IllegalArgumentException(mensagem + ": Cenario invalido");
+		}
+		if (cenario >= ctrlCenarios.getNumeracao()) {
+			throw new IllegalArgumentException(mensagem + ": Cenario nao cadastrado");
+		}
+		if (checkFechado) {
+			if (ctrlCenarios.fechado(cenario)) {
+				throw new IllegalArgumentException(mensagem + ": Cenario ja esta fechado");
+			}
+		} else {
+			if (!ctrlCenarios.fechado(cenario)) {
+				throw new IllegalArgumentException(mensagem + ": Cenario ainda esta aberto");
+			}
+		}
+	}
+	
 	/**
 	 * Encerra um cenário (indicando se ocorreu ou não).
 	 * Adiciona ao caixa do sistema a multiplicação entre a taxa e a soma de todas as apostas erradas
@@ -168,15 +171,7 @@ public class Sistema {
 	 * @param ocorreu booleando que indica a ocorrência do cenário
 	 */
 	public void fecharAposta(int cenario, boolean ocorreu) {
-		if (cenario <= 0) {
-			throw new IllegalArgumentException("Erro ao fechar aposta: Cenario invalido");
-		}
-		if (cenario >= ctrlCenarios.getNumeracao()) {
-			throw new IllegalArgumentException("Erro ao fechar aposta: Cenario nao cadastrado");
-		}
-		if (ctrlCenarios.fechado(cenario)) {
-			throw new IllegalArgumentException("Erro ao fechar aposta: Cenario ja esta fechado");
-		}
+		validarCenario(cenario, "Erro ao fechar aposta", true);
 		
 		int valorApostasErradas = this.ctrlApostas.valorApostasErradas(cenario, ocorreu);
 		int valorTaxado = (int) Math.floor(((double) valorApostasErradas * taxa)); 
@@ -193,15 +188,7 @@ public class Sistema {
 	 * @return o valor total de um cenário encerrado que será destinado ao caixa
 	 */
 	public int getCaixaCenario(int cenario) {
-		if (cenario <= 0) {
-			throw new IllegalArgumentException("Erro na consulta do caixa do cenario: Cenario invalido");
-		}
-		if (cenario >= ctrlCenarios.getNumeracao()) {
-			throw new IllegalArgumentException("Erro na consulta do caixa do cenario: Cenario nao cadastrado");
-		}
-		if (!ctrlCenarios.fechado(cenario)) {
-			throw new IllegalArgumentException("Erro na consulta do caixa do cenario: Cenario ainda esta aberto");
-		}
+		validarCenario(cenario, "Erro na consulta do caixa do cenario", false);
 		return this.ctrlCenarios.getCaixaCenario(cenario);
 	}
 
@@ -211,21 +198,8 @@ public class Sistema {
 	 * @return o valor total de um cenário encerrado que será destinado a distribuição entre as apostas vencedoras
 	 */
 	public int getTotalRateioCenario(int cenario) {
-		if (cenario <= 0) {
-			throw new IllegalArgumentException("Erro na consulta do total de rateio do cenario: Cenario invalido");
-		}
-		if (cenario >= ctrlCenarios.getNumeracao()) {
-			throw new IllegalArgumentException("Erro na consulta do total de rateio do cenario: Cenario nao cadastrado");
-		}
-		if (!ctrlCenarios.fechado(cenario)) {
-			throw new IllegalArgumentException("Erro na consulta do total de rateio do cenario: Cenario ainda esta aberto");
-		}
+		validarCenario(cenario, "Erro na consulta do total de rateio do cenario", false);
 		return this.ctrlCenarios.getTotalRateio(cenario);
 	}
-
-	
-
-	
-
 
 }

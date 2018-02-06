@@ -24,8 +24,8 @@ public class Cenario {
 		}
 		this.descricao = descricao;
 		this.numeracao = numeracao;
-		this.estado = "Não finalizado";
-		this.finalizado= false;		
+		this.estado = "Nao finalizado";
+		this.finalizado= false;
 		this.caixa = 0;
 		this.totalRateio = 0;
 	}
@@ -78,7 +78,7 @@ public class Cenario {
 	/**
 	 * @return representação textual do cenário que contém a numeração, descrição e estado do mesmo.
 	 */
-	public String toString() {
+	public String toString() {		
 		return String.format("%d - %s - %s", this.numeracao, this.descricao, this.estado);
 	}
 
