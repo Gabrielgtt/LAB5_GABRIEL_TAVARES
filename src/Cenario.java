@@ -56,7 +56,7 @@ public class Cenario {
 		}
 		
 		this.caixa = valorTaxado;
-		this.totalRateio = totalRateio;		
+		this.totalRateio += totalRateio;
 	}
 
 	/**
@@ -65,8 +65,8 @@ public class Cenario {
 	public int getCaixa(){
 		validarAcao(true);
 		return this.caixa;
-	}	
-
+	}
+	
 	/** 
 	 * @return rateio total do cenário
 	 */

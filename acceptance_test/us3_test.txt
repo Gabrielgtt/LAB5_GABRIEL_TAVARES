@@ -6,7 +6,6 @@ inicializa caixa=100000 taxa=0.01
 
 expect 100000 getCaixa
 
-
 # Testes com exception
 
 expectError "Erro na inicializacao: Caixa nao pode ser inferior a 0" inicializa caixa=-1 taxa=0.01
@@ -108,3 +107,27 @@ expectError "Erro na consulta do total de rateio do cenario: Cenario invalido" g
 expectError "Erro na consulta do total de rateio do cenario: Cenario invalido" getTotalRateioCenario cenario=-1
 expectError "Erro na consulta do total de rateio do cenario: Cenario nao cadastrado" getTotalRateioCenario cenario=80
 expectError "Erro na consulta do total de rateio do cenario: Cenario ainda esta aberto" getTotalRateioCenario cenario=3
+
+###########################
+#     LAB04 - TESTE 5     #
+###########################
+
+cadastrarCenario descricao="As provas vao ser corrigidas ate sexta" bonus=1000
+cadastrarCenario descricao="As provas nao vao ser corrigidas ate sexta" bonus=10
+
+expect "4 - As provas vao ser corrigidas ate sexta - Nao finalizado - R$ 10,00" exibirCenario cenario=4
+
+cadastrarAposta cenario=4 apostador="Matheus Melanio" valor=2000 previsao="N VAI ACONTECER"
+cadastrarAposta cenario=4 apostador="Viktor Borgino" valor=3000 previsao="VAI ACONTECER"
+
+fecharAposta cenario=4 ocorreu=true
+
+expect 20 getCaixaCenario cenario=4
+expect 2980 getTotalRateioCenario cenario=4
+expect 99210 getCaixa
+
+# Testes com exception
+
+expectError "Erro no cadastro de cenario: Bonus invalido" cadastrarCenario descricao="Teste" bonus=0
+expectError "Erro na consulta do caixa do cenario: Cenario ainda esta aberto" getCaixaCenario cenario=5
+expectError "Erro na consulta do total de rateio do cenario: Cenario ainda esta aberto" getTotalRateioCenario cenario=5

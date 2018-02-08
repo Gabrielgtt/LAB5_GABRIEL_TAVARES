@@ -9,7 +9,7 @@ public class Aposta {
 	private String apostador;
 	private int valor;
 	private String previsao;
-	private Seguro seguro;
+	private SeguroVazio seguro;
 
 	/**
 	 * Construtor de aposta que atribui seus atributos conforme recebido.
@@ -24,7 +24,7 @@ public class Aposta {
 		this.apostador = apostador;
 		this.valor = valor;
 		this.previsao = previsao;
-		this.setSeguro(0);
+		this.seguro = new SeguroVazio(0);
 	}
 	
 	/**
@@ -117,7 +117,7 @@ public class Aposta {
 	 * @return representação textual da aposta com nome do apostador, valor em Reais e a previsão
 	 */
 	public String toString() {
-		double valorReais = ((double) valor) / (double) 100;		
+		double valorReais = ((double) valor) / (double) 100;
 		return String.format("%s - R$%.2f - %s", this.apostador, valorReais, this.previsao) + seguro.toString();
 	}
 }

@@ -10,4 +10,6 @@ public class CenarioComBonusTest {
 		assertEquals(cenario.toString(), "1 - Um teste - Nao finalizado - 30");
 	}
 	
+	
+	
 }

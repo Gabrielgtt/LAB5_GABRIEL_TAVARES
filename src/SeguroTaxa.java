@@ -1,10 +1,15 @@
 
-public class SeguroTaxa extends Seguro {
+public class SeguroTaxa extends SeguroVazio {
 	
 	private double taxa;
 	
+	/**
+	 * Construtor de seguro por taxa. 
+	 * @param valorAposta
+	 * @param taxa
+	 */
 	public SeguroTaxa(int valorAposta, double taxa) {
-		super((int) (valorAposta * taxa)); // VERIFICAR O CÁLCULO CONFORME A TAXA É DADA
+		super(valorAposta);
 		this.taxa = taxa;
 	}
 	

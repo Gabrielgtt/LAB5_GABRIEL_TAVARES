@@ -13,9 +13,9 @@ public class ApostaTest {
 	
 	@Before
 	public void inicializar() {
-		double taxa = 0.5;
+		double taxa = 0.25;
 		int valorSeguro = 200;
-		this.aposta = new Aposta(1, "Gabriel", 100, "VAI ACONTECER");	
+		this.aposta = new Aposta(1, "Gabriel", 100, "VAI ACONTECER");
 		this.aposta2 = new Aposta(2, "Matheus", 12345, "N VAI ACONTECER");
 		this.aposta3 = new Aposta(2, "Matheus", 1234, "N VAI ACONTECER", taxa);
 		this.aposta4 = new Aposta(2, "Matheus", 12355, "N VAI ACONTECER", valorSeguro);
@@ -48,6 +48,11 @@ public class ApostaTest {
 
 	@Test
 	public void getToStringSeguroTaxa() {
-		assertEquals("Matheus - R$12,34 - N VAI ACONTECER - ASSEGURADA (TAXA) - 50%", aposta3.toString());
+		assertEquals("Matheus - R$12,34 - N VAI ACONTECER - ASSEGURADA (TAXA) - 25%", aposta3.toString());
+	}
+	
+	@Test
+	public void getToStringSeguroValor() {
+		assertEquals("Matheus - R$123,55 - N VAI ACONTECER - ASSEGURADA (VALOR) - 200", aposta4.toString());
 	}
 }

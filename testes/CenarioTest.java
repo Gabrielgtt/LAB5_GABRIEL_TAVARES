@@ -25,7 +25,7 @@ public class CenarioTest {
 	
 	@Test
 	public void toStringTest() {
-		String esperado = "1 - Tirar 10 no Lab5 - Não finalizado";
+		String esperado = "1 - Tirar 10 no Lab5 - Nao finalizado";
 		assertEquals(this.cenario.toString(), esperado);
 	}
 

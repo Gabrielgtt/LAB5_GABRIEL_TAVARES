@@ -20,7 +20,7 @@ public class CenarioComBonus extends Cenario {
 		 */
 		public int getTotalRateio(){
 			return this.totalRateio - bonus;
-		}
+		}		
 		
 		/**
 		 * Representação em string do cenário com o bônus
@@ -30,4 +30,3 @@ public class CenarioComBonus extends Cenario {
 			return String.format("%s - %d", super.toString(), this.bonus);
 		}
 }
-
